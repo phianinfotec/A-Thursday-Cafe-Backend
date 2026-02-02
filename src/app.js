@@ -1,22 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// require("dotenv").config();
-// const path = require("path");
-
-// // serve images
-// app.use("/assets", express.static(path.join(__dirname, "assets")));
-
-// const authRoutes = require("./routes/auth.routes");
-
-// const app = express();
-
-// app.use(cors());
-// app.use(express.json());
-
-// app.use("/api", authRoutes);
-
-// module.exports = app;
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -24,16 +5,23 @@ require("dotenv").config();
 
 const app = express();
 
+/* -------------------- CORE MIDDLEWARE -------------------- */
 app.use(cors());
-app.use(express.json());
 
-// 🔥 FIXED STATIC ASSETS (IMPORTANT)
+// 🔥 VERY IMPORTANT (form-data + json both)
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+/* -------------------- STATIC FILES -------------------- */
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
-console.log(
-  path.join(__dirname, "assets", "img", "1768545081693-products-coffee-1.webp"),
-);
-// ROUTES
+/* -------------------- DEBUG (temporary) -------------------- */
+app.use((req, res, next) => {
+  // console.log("➡️", req.method, req.originalUrl);
+  next();
+});
+
+/* -------------------- ROUTES -------------------- */
 const homeRoutes = require("./routes/home.routes");
 const authRoutes = require("./routes/auth.routes");
 const populerRoutes = require("./routes/populer.routes");
@@ -47,7 +35,8 @@ const saucerRoutes = require("./routes/saucer.routes");
 const cartRoutes = require("./routes/cart.routes");
 const feedbackRoutes = require("./routes/feedback.routes");
 const blogRoutes = require("./routes/blog.routes");
-const mainCategoryService = require("./routes/mainCategory.routes");
+const mainCategoryRoutes = require("./routes/mainCategory.routes");
+const bannerRoutes = require("./routes/banner.routes");
 
 app.use("/api", saucerRoutes);
 app.use("/api", homeRoutes);
@@ -62,6 +51,13 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api", feedbackRoutes);
 app.use("/api", blogRoutes);
-app.use("/api", mainCategoryService)
+app.use("/api", mainCategoryRoutes);
+app.use("/api", bannerRoutes);
+
+/* -------------------- GLOBAL ERROR HANDLER -------------------- */
+app.use((err, req, res, next) => {
+  console.error("❌ ERROR:", err);
+  res.status(500).json({ message: "Internal Server Error" });
+});
 
 module.exports = app;

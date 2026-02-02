@@ -18,7 +18,7 @@ exports.addToCart = async (data) => {
       `INSERT INTO cart (user_id, item_id, name, price, image)
        VALUES (?, ?, ?, ?, ?)`,
       [user_id, item_id, name, price, image]
-    );
+    ); 
   }
 };
 

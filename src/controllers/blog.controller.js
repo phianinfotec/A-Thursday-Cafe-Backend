@@ -6,6 +6,7 @@ const db = require('../config/db');
 const addBlog = async (req, res) => {
   try {
     const { title, content } = req.body;
+    console.log( req.body)
 
     if (!title || !content || !req.file) {
       return res.status(400).json({ message: 'All fields required' });
