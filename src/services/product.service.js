@@ -142,3 +142,19 @@ exports.getPopularProducts = async () => {
 
   return rows;
 };
+
+
+exports.getProductsWithBeans = async ()=> {
+  const [rows] = await db.query(`
+    SELECT
+      p.id,
+      p.name,
+      p.price,
+      c.earn_percent,
+      c.redeem_percent
+    FROM products p
+    JOIN categories c ON c.id=p.category_id
+  `);
+
+  return rows;
+}

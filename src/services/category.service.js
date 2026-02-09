@@ -12,28 +12,31 @@ exports.createCategory = async (data) => {
     data.main_category_id
   ]);
 
-  return result;
+  return result; // insertId yahin se milta hai
 };
 
-/* ================= READ ================= */
+/* ================= READ (IMPORTANT FIX HERE) ================= */
 exports.getAllCategories = async () => {
   const sql = `
     SELECT 
       c.id AS category_id,
       c.name AS category_name,
-      mc.id AS main_category_id,
+      c.main_category_id,
       mc.name AS main_category_name,
       mc.earn_beans,
       mc.redeem_beans
     FROM categories c
-    JOIN main_categories mc 
+    LEFT JOIN main_categories mc
       ON mc.id = c.main_category_id
+     AND mc.status = 1
     ORDER BY c.id DESC
   `;
 
   const [rows] = await db.query(sql);
   return rows;
 };
+
+
 
 /* ================= UPDATE ================= */
 exports.updateCategory = async (id, data) => {
@@ -52,5 +55,8 @@ exports.updateCategory = async (id, data) => {
 
 /* ================= DELETE ================= */
 exports.deleteCategory = async (id) => {
-  await db.query('DELETE FROM categories WHERE id = ?', [id]);
+  await db.query(
+    'DELETE FROM categories WHERE id = ?',
+    [id]
+  );
 };

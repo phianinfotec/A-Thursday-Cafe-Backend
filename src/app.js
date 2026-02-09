@@ -13,7 +13,11 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 /* -------------------- STATIC FILES -------------------- */
-app.use("/assets", express.static(path.join(__dirname, "assets")));
+// app.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use(
+  "/assets",
+  express.static(path.join(__dirname, "assets"))
+);
 
 /* -------------------- DEBUG (temporary) -------------------- */
 app.use((req, res, next) => {
