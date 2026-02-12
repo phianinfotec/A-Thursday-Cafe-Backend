@@ -1,6 +1,6 @@
 const service = require('../services/profile.service');
 
-/* ===== GET PROFILE ===== */
+/* USER PROFILE */
 exports.getProfile = async (req, res) => {
   try {
     const data = await service.getProfile(req.user.id);
@@ -10,11 +10,20 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-/* ===== GET ORDERS ===== */
-exports.getOrders = async (req, res) => {
+/* ADMIN - ALL USERS */
+exports.getAllUsers = async (req, res) => {
   try {
-    const filter = req.query.filter || 'day';
-    const data = await service.getOrders(req.user.id, filter);
+    const data = await service.getAllUsers();
+    res.json({ success: true, data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/* ADMIN - USER DETAIL */
+exports.getUserById = async (req, res) => {
+  try {
+    const data = await service.getUserById(req.params.id);
     res.json({ success: true, data });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

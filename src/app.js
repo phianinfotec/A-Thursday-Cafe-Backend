@@ -41,6 +41,7 @@ const feedbackRoutes = require("./routes/feedback.routes");
 const blogRoutes = require("./routes/blog.routes");
 const mainCategoryRoutes = require("./routes/mainCategory.routes");
 const bannerRoutes = require("./routes/banner.routes");
+const contactusRoutes = require("./routes/contact_us.routes");
 
 app.use("/api", saucerRoutes);
 app.use("/api", homeRoutes);
@@ -57,6 +58,7 @@ app.use("/api", feedbackRoutes);
 app.use("/api", blogRoutes);
 app.use("/api", mainCategoryRoutes);
 app.use("/api", bannerRoutes);
+app.use("/api", contactusRoutes);
 
 /* -------------------- GLOBAL ERROR HANDLER -------------------- */
 app.use((err, req, res, next) => {
