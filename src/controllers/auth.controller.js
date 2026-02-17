@@ -126,11 +126,53 @@ const verifyOTP = async (req, res) => {
 };
 
 /* ================= LOGIN ================= */
+// const login = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     const [rows] = await db.query("SELECT * FROM users WHERE email=?", [email]);
+
+//     if (!rows.length) {
+//       return res.status(401).json({
+//         message: "Invalid email or password",
+//       });
+//     }
+
+//     const user = rows[0];
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+
+//     if (!isMatch) {
+//       return res.status(401).json({
+//         message: "Invalid email or password",
+//       });
+//     }
+//     // ✅ YAHAN LAGANA HAI
+//     if (!user.is_verified) {
+//       return res.status(401).json({
+//         message: "Please verify OTP before login",
+//       });
+//     }
+
+//     const token = generateToken({
+//       userId: user.id,
+//       username: user.username,
+//     });
+
+//     res.json({ token });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const [rows] = await db.query("SELECT * FROM users WHERE email=?", [email]);
+    const [rows] = await db.query(
+      "SELECT * FROM users WHERE email=?",
+      [email]
+    );
 
     if (!rows.length) {
       return res.status(401).json({
@@ -147,7 +189,7 @@ const login = async (req, res) => {
         message: "Invalid email or password",
       });
     }
-    // ✅ YAHAN LAGANA HAI
+
     if (!user.is_verified) {
       return res.status(401).json({
         message: "Please verify OTP before login",
@@ -159,11 +201,22 @@ const login = async (req, res) => {
       username: user.username,
     });
 
-    res.json({ token });
+    // ✅ FIXED RESPONSE
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        name: user.username,
+        email: user.email,
+        phone: user.mobile
+      }
+    });
+
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 /* ================= LOGOUT ================= */
 const logout = (req, res) => {
