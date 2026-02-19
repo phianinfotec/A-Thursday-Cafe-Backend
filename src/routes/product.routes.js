@@ -1,17 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/product.controller");
 const upload = require("../middlewares/upload.middleware");
-const auth = require("../middlewares/auth.middleware");
+const controller = require("../controllers/product.controller");
+const adminAuth = require("../middlewares/adminAuth.middleware");
 
-/* ADMIN */
-router.post("/", auth, upload.single("image"), controller.createProduct);
-router.get("/admin", auth, controller.getAdminProducts);
-router.put("/:id", auth, upload.single("image"), controller.updateProduct);
-router.delete("/:id", auth, controller.deleteProduct);
-
-/* USER */
+/* ================= USER ROUTES ================= */
 router.get("/user", controller.getUserProducts);
-router.get("/popular", controller.getPopularProducts); // ⭐ NEW
+router.get("/popular", controller.getPopularProducts);
+
+/* ================= ADMIN ROUTES ================= */
+router.post("/", adminAuth, upload.single("image"), controller.createProduct);
+router.get("/admin", adminAuth, controller.getAdminProducts);
+router.get("/:id", adminAuth, controller.getProductById);
+router.put("/:id", adminAuth, upload.single("image"), controller.updateProduct);
+router.delete("/:id", adminAuth, controller.deleteProduct);
 
 module.exports = router;
