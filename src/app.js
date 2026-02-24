@@ -8,6 +8,7 @@ const app = express();
 /* -------------------- CORE MIDDLEWARE -------------------- */
 app.use(cors());
 
+app.set("trust proxy", true);
 // 🔥 VERY IMPORTANT (form-data + json both)
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
@@ -43,6 +44,8 @@ const mainCategoryRoutes = require("./routes/mainCategory.routes");
 const bannerRoutes = require("./routes/banner.routes");
 const contactusRoutes = require("./routes/contact_us.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
+const notificationRoutes = require("./routes/notification.routes");
+
 
 app.use("/api", saucerRoutes);
 app.use("/api", homeRoutes);
@@ -61,6 +64,7 @@ app.use("/api", mainCategoryRoutes);
 app.use("/api", bannerRoutes);
 app.use("/api", contactusRoutes);
 app.use("/api/admin", dashboardRoutes);
+app.use("/api/admin", notificationRoutes);
 
 /* -------------------- GLOBAL ERROR HANDLER -------------------- */
 app.use((err, req, res, next) => {

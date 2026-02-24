@@ -11,6 +11,7 @@ exports.getProfile = async (userId) => {
       u.username,
       u.email,
       u.mobile,
+      u.profile_pic,
 
       w.collected,
       w.redeemed,
@@ -48,6 +49,7 @@ exports.getProfile = async (userId) => {
     name: rows[0].username,
     email: rows[0].email,
     mobile: rows[0].mobile,
+    profile_pic: rows[0].profile_pic, // ✅ add this
     level: rows[0].level || null,
     beans: {
       collected: rows[0].collected || 0,
@@ -116,4 +118,20 @@ exports.getAllUsers = async () => {
 =================================*/
 exports.getUserById = async (userId) => {
   return await exports.getProfile(userId);
+};
+
+
+/* ===============================
+   UPDATE PROFILE PIC
+=================================*/
+exports.updateProfilePic = async (userId, imagePath) => {
+
+  await db.query(
+    "UPDATE users SET profile_pic=? WHERE id=?",
+    [imagePath, userId]
+  );
+
+  return {
+    profile_pic: imagePath
+  };
 };

@@ -7,6 +7,7 @@ const adminAuth = require("../middlewares/adminAuth.middleware");
 /* ================= USER ROUTES ================= */
 router.get("/user", controller.getUserProducts);
 router.get("/popular", controller.getPopularProducts);
+router.get("/category-wise", controller.getCategoryWiseProducts);
 
 /* ================= ADMIN ROUTES ================= */
 router.post("/", adminAuth, upload.single("image"), controller.createProduct);

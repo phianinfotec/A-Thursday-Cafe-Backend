@@ -20,12 +20,16 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-validator": "^7.3.1",
+    "geoip-lite": "^1.4.10",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.0.2",
     "mysql2": "^3.16.0",
     "nodemailer": "^8.0.1",
     "razorpay": "^2.9.6",
-    "twilio": "^5.11.2"
+    "socket.io": "^4.8.3",
+    "twilio": "^5.11.2",
+    "useragent": "^2.3.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
