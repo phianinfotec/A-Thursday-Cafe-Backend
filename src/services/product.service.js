@@ -18,7 +18,15 @@ exports.createProduct = async (data) => {
     (name, description, price, category_id, is_popular, image, status, food_type)
     VALUES (?, ?, ?, ?, ?, ?, 1,?)
   `,
-    [name, description, price, category_id, Number(is_popular) || 0, image],
+    [
+      name,
+      description,
+      price,
+      category_id,
+      Number(is_popular) || 0,
+      image,
+      food_type,
+    ],
   );
 
   return result.insertId;
@@ -73,7 +81,15 @@ exports.getProductById = async (id) => {
 
 /* ================= UPDATE ================= */
 exports.updateProduct = async (id, data) => {
-  const { name, description, price, category_id, is_popular, image,food_type } = data;
+  const {
+    name,
+    description,
+    price,
+    category_id,
+    is_popular,
+    image,
+    food_type,
+  } = data;
 
   let sql = `
     UPDATE products SET
@@ -91,6 +107,7 @@ exports.updateProduct = async (id, data) => {
     price,
     category_id,
     Number(is_popular) || 0,
+    food_type, // ✅ ADD THIS
   ];
 
   if (image) {
