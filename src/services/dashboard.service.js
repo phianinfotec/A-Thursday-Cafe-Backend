@@ -35,8 +35,7 @@ exports.getDashboardOverview = async () => {
       `SELECT id, username, email, mobile, created_at 
        FROM users 
        WHERE role='user' 
-       ORDER BY created_at DESC 
-       LIMIT 5`
+       ORDER BY created_at DESC`
     )
   ]);
 
