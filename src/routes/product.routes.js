@@ -16,4 +16,6 @@ router.get("/:id", adminAuth, controller.getProductById);
 router.put("/:id", adminAuth, upload.single("image"), controller.updateProduct);
 router.delete("/:id", adminAuth, controller.deleteProduct);
 
+router.patch("/:id/status", adminAuth, controller.updateProductStatus);
+
 module.exports = router;

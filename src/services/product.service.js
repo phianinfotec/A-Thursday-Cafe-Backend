@@ -274,3 +274,13 @@ exports.getCategoryWiseProducts = async (type) => {
 
   return Object.values(grouped);
 };
+
+
+exports.updateProductStatus = async (id, status) => {
+
+  await db.execute(
+    `UPDATE products SET status = ? WHERE id = ?`,
+    [status, id]
+  );
+
+};

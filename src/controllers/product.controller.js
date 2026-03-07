@@ -158,3 +158,24 @@ exports.getCategoryWiseProducts = async (req, res) => {
     });
   }
 };
+
+
+exports.updateProductStatus = async (req, res) => {
+  try {
+
+    const { status } = req.body;
+
+    await service.updateProductStatus(req.params.id, status);
+
+    res.json({
+      success: true,
+      message: "Product status updated"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success:false,
+      message: err.message
+    });
+  }
+};
